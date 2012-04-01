@@ -1,0 +1,37 @@
+package com.jawesa.util;
+
+import javax.inject.Inject;
+
+import org.jboss.seam.security.annotations.Secures;
+
+import com.jawesa.action.user.Identity;
+import com.jawesa.annotation.controller.ControllerQualifier;
+import com.jawesa.annotation.qualifier.user.LoggedIn;
+import com.jawesa.controller.common.Controller;
+
+public class Authorizations {
+
+	@Inject
+	@ControllerQualifier
+	private Controller controller;
+
+	@Inject
+	private Identity identity;
+
+	@Secures
+	@LoggedIn
+	public boolean isLoggedIn() {
+		boolean result = false;
+		if (identity != null && identity.isLoggedIn()) {
+			result = true;
+		}
+
+		if (!result) {
+			controller
+					.info("Vous devez être connecté pour accéder à cette page.");
+		}
+
+		return result;
+	}
+
+}

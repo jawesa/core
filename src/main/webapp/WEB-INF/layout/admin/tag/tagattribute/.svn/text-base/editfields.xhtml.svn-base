@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui">
+
+	<j:edit label="Name">
+		<p:inputText value="#{tagAttributeHome.instance.name}" required="true"></p:inputText>
+	</j:edit>
+
+	<j:edit label="Required">
+		<p:selectBooleanCheckbox value="#{tagAttributeHome.instance.required}"
+			required="true" />
+	</j:edit>
+
+	<j:edit label="Type">
+		<p:selectOneMenu value="#{tagAttributeHome.instance.type}">
+			<f:selectItems value="#{tagAttributeList}" var="_tagAttribute"
+				itemLabel="#{_tagAttribute.name}" itemValue="#{_tagAttribute}" />
+		</p:selectOneMenu>
+	</j:edit>
+
+	<j:edit label="Custom type">
+		<p:inputText value="#{tagAttributeHome.instance.customType}" />
+	</j:edit>
+
+	<j:edit label="Description">
+		<p:inputTextarea value="#{tagAttributeHome.instance.description}"
+			style="width:300px;height:100px;"
+			required="true" />
+	</j:edit>
+
+</ui:composition>

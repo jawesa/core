@@ -1,0 +1,30 @@
+package com.jawesa.util;
+
+import org.jboss.seam.faces.rewrite.FacesRedirect;
+import org.jboss.seam.faces.security.AccessDeniedView;
+import org.jboss.seam.faces.security.LoginView;
+import org.jboss.seam.faces.view.config.ViewConfig;
+import org.jboss.seam.faces.view.config.ViewPattern;
+
+import com.jawesa.annotation.qualifier.user.LoggedIn;
+
+@ViewConfig
+public interface Pages {
+	static enum Pages1 {
+		// FIXME restore security after dev time
+		
+		//@LoggedIn
+		@ViewPattern("/admin/*")
+		ADMIN,
+		
+		//@LoggedIn
+		@ViewPattern("/private/*")
+		PRIVATE,
+		
+		@FacesRedirect
+		@ViewPattern("/*")
+		@AccessDeniedView("/index.xhtml")
+		@LoginView("/login.xhtml")
+		ALL;
+	}
+}

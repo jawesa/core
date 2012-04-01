@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:r="http://richfaces.org/rich"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+		<p:panel header="Welcome to Jawesa !">
+			<h:panelGroup rendered="#{identity.loggedIn}">
+				<p>
+					<h:outputText value="Bonjour #{identity.user.login}." />
+					<h:outputText value=" Vous êtes un peu le roi du moment en ce moment." rendered="#{identity.hasPermission('do','all')}" />
+				</p>
+			</h:panelGroup>
+			<p>
+				<h:outputText value="Message : #{messages['welcome']}" />
+			</p>
+
+		</p:panel>
+
+		<p:panel header="Jawesa">
+			<p:carousel rows="1" circular="true" autoPlayInterval="2000"
+				 itemStyle="height:60px;width:400px;">
+				<p:tab>
+					<h1 style="margin: 20px">Welcome !</h1>
+				</p:tab>
+				<p:tab>
+					<h1 style="margin: 20px">Get ready !!</h1>
+				</p:tab>
+				<p:tab>
+					<h1 style="margin: 20px">All the fun starts now !!!</h1>
+				</p:tab>
+			</p:carousel>
+		</p:panel>
+
+		<p:panel header="Users">
+			<h:panelGroup rendered="#{empty users}">
+				<em>No registered users.</em>
+			</h:panelGroup>
+
+			<h:form>
+				<p:dataTable id="usersList" var="_user" value="#{users}"
+					rendered="#{not empty users}">
+					<p:column headerText="Id" sortBy="#{_user.id}">
+						<h:outputText value="#{_user.id}" />
+					</p:column>
+
+					<p:column headerText="Login" sortBy="#{_user.login}">
+						<h:outputText value="#{_user.login}" />
+					</p:column>
+
+					<p:column headerText="Password" sortBy="#{_user.password}">
+						<h:outputText value="#{_user.password}" />
+					</p:column>
+
+					<p:column headerText="Email" sortBy="#{_user.email}">
+						<h:outputText value="#{_user.email}" />
+					</p:column>
+
+					<p:column headerText="Website" sortBy="#{_user.website}">
+						<h:outputText value="#{_user.website}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{tagHome.init()}" />
+			<f:viewParam name="id" value="#{tagHome.id}" converter="longConverter" />
+		</f:metadata>
+
+		<h:form prependId="false">
+			<!-- PANEL : TAG INFORMATIONS -->
+			<p:panel header="EditTag">
+				<h:panelGrid columns="2" rowClasses="top">
+					<h:panelGroup>
+						<j:edit label="Name">
+							<p:inputText value="#{tagHome.instance.name}" id="name"
+								required="true" label="name" />
+						</j:edit>
+						<j:edit label="Library" required="true">
+							<p:selectOneMenu value="#{tagHome.instance.library}">
+								<f:selectItems value="#{applicationCache.listLibraries}"
+									var="_library" itemLabel="#{_library.name}"
+									itemValue="#{_library}"></f:selectItems>
+							</p:selectOneMenu>
+						</j:edit>
+						<j:edit label="Status">
+							<h:outputText value="#{tagHome.instance.status}" />
+						</j:edit>
+					</h:panelGroup>
+					<h:panelGroup>
+						<j:edit label="Class">
+							<p:inputText value="#{tagHome.instance.tagClass}" id="tagClass"
+								label="tagClass" />
+						</j:edit>
+						<j:edit label="Tag Type">
+							<p:inputText value="#{tagHome.instance.tagType}" id="tagType"
+								label="tagType" />
+						</j:edit>
+						<j:edit label="Family">
+							<p:inputText value="#{tagHome.instance.tagFamily}" id="tagFamily"
+								label="tagFamily" />
+						</j:edit>
+						<j:edit label="Rendered Type">
+							<p:inputText value="#{tagHome.instance.renderedType}"
+								id="renderedType" label="renderedType" />
+						</j:edit>
+						<j:edit label="Rendered Class">
+							<p:inputText value="#{tagHome.instance.renderedClass}"
+								id="renderedClass" label="renderedClass" />
+						</j:edit>
+						<j:edit label="Handler Class">
+							<p:inputText value="#{tagHome.instance.handlerClass}"
+								id="handlerClass" label="handlerClass" />
+						</j:edit>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+
+			<!-- PANEL : APIS -->
+			<p:panel header="APIs" id="apis">
+				<p:dataTable var="_api"
+					value="#{jsfUtil.asList(tagHome.instance.apis)}">
+					<p:column headerText="Name">
+						<h:outputText value="#{_api.name}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_api.description}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton immediate="true" value="Edit selection"
+					oncomplete="dialogAddApi.show()"
+					update="#{p:component('selectedApis')}" />
+			</p:panel>
+
+			<!-- PANEL : ATTRIBUTES -->
+			<p:panel header="Attributes" id="attributes">
+				<p:commandButton immediate="true" value="Edit selection"
+					oncomplete="dialogAddAttribute.show()"
+					update="#{p:component('selectedAttributes')}" />
+
+				<p:commandButton immediate="true" value="Create new attribute"
+					action="#{tagAttributeHome.clear()}"
+					oncomplete="dialogCreateAttribute.show()"
+					update="#{p:component('dialogCreateAttributeContent')}" />
+
+				<!-- DATATABLE : SELECTED ATTRIBUTES -->
+				<p:dataTable var="_attribute" value="#{tagHome.allTagAttributes}">
+					<f:facet name="header">
+						Selected Attributes
+					</f:facet>
+
+					<p:column headerText="Name">
+						<h:outputText value="#{_attribute.name}" />
+					</p:column>
+					<p:column headerText="Required">
+						<j:iconBoolean value="#{_attribute.required}"></j:iconBoolean>
+					</p:column>
+					<p:column headerText="Type">
+						<h:outputText value="#{_attribute.type}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_attribute.description}" />
+					</p:column>
+					<p:column headerText="In API ?">
+						<j:iconBoolean value="#{tagHome.isAttributeInApis(_attribute)}"></j:iconBoolean>
+					</p:column>
+					<p:column headerText="Direct link ?">
+						<j:iconBoolean value="#{tagHome.isAttributeLinked(_attribute)}"></j:iconBoolean>
+					</p:column>
+				</p:dataTable>
+
+				<!--  DATATABLE : NEW ATTRIBUTES -->
+				<p:outputPanel id="dataTableNewAttributes">
+					<p:dataTable var="_attribute" value="#{tagHome.newAttributes}">
+						<f:facet name="header">
+						New Attributes
+					</f:facet>
+						<p:column headerText="Name">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{_attribute.name}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{_attribute.name}"></p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Required">
+							<p:cellEditor>
+								<f:facet name="output">
+									<j:iconBoolean value="#{_attribute.required}"></j:iconBoolean>
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{_attribute.required}"></p:selectBooleanCheckbox>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Type">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{_attribute.type}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{_attribute.type}"></p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Description">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{_attribute.description}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{_attribute.description}"></p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Actions">
+							<p:rowEditor />
+							<p:commandButton image="ui-icon ui-icon-closethick"
+								action="#{tagHome.removeNewAttribute(_attribute.name)}"
+								process="@this" update="dataTableNewAttributes" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+			</p:panel>
+
+			<p:commandButton ajax="false" value="Save" action="#{tagHome.save()}" />
+			<p:commandButton ajax="false" value="Cancel"
+				action="#{tagHome.cancel()}" immediate="true" />
+		</h:form>
+
+		<!-- DIALOG : API SELECTION -->
+		<p:dialog widgetVar="dialogAddApi" header="API Selection" modal="true">
+			<h:form>
+				<p:dataTable value="#{tagHome.apisModel}" var="_api"
+					selection="#{tagHome.selectedApis}" id="selectedApis">
+					<p:column selectionMode="multiple" />
+					<p:column headerText="Name">
+						<h:outputText value="#{_api.name}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_api.description}" />
+					</p:column>
+					<p:column headerText="Attributes">
+						<p:dataList value="#{jsfUtil.asList(_api.attributes)}"
+							var="_attribute">
+							<h:outputText value="#{_attribute.name}" />
+						</p:dataList>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Confirm"
+					action="#{tagHome.reportApisSelection()}"
+					oncomplete="dialogAddApi.hide()" update="#{p:component('apis')}" />
+				<p:commandButton value="Cancel" onclick="dialogAddApi.hide()" />
+			</h:form>
+		</p:dialog>
+
+		<!-- DIALOG : ATTRIBUTES SELECTION -->
+		<p:dialog widgetVar="dialogAddAttribute" header="Attribute Selection"
+			modal="true">
+			<h:form>
+				<p:dataTable value="#{tagHome.attributesModel}" var="_attribute"
+					selection="#{tagHome.selectedAttributes}" id="selectedAttributes"
+					rowStyleClass="#{tagHome.isAttributeInApis(_attribute) ? 'selected-row' : ''}">
+					<p:column selectionMode="multiple" />
+					<p:column headerText="Name">
+						<h:outputText value="#{_attribute.name}" />
+					</p:column>
+					<p:column headerText="Required">
+						<h:outputText value="#{_attribute.required}" />
+					</p:column>
+					<p:column headerText="Type">
+						<h:outputText value="#{_attribute.type}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_attribute.description}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Confirm"
+					action="#{tagHome.reportAttributesSelection()}"
+					oncomplete="dialogAddAttribute.hide()"
+					update="#{p:component('attributes')}" />
+				<p:commandButton value="Cancel" onclick="dialogAddAttribute.hide()" />
+			</h:form>
+		</p:dialog>
+
+		<!-- DIALOG : NEW ATTRIBUTE CREATION/EDITION -->
+		<p:dialog widgetVar="dialogCreateAttribute"
+			header="Attribute Creation" modal="true">
+			<h:form>
+				<p:outputPanel id="dialogCreateAttributeContent">
+
+					<ui:include src="/WEB-INF/layout/admin/tag/tagattribute/editfields.xhtml" />
+
+					<p:commandButton value="Create"
+						action="#{tagHome.addNewAttribute()}"
+						oncomplete="dialogCreateAttribute.hide()"
+						update="#{p:component('dataTableNewAttributes')}" />
+					<p:commandButton value="Cancel" immediate="true"
+						onclick="dialogCreateAttribute.hide()" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

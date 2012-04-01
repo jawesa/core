@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{permissionHome.id}" converter="longConverter"></f:viewParam>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:panel header="#{permissionHome.managed ? 'Edit' : 'Create'} Permission">
+				<j:edit label="Action">
+					<p:inputText label="action"	value="#{permissionHome.instance.action}"/>
+				</j:edit>
+
+				<j:edit label="Target">
+					<p:inputText label="target" value="#{permissionHome.instance.target}"/>
+				</j:edit>
+
+				<j:edit label="Description">
+					<p:inputTextarea label="description" value="#{permissionHome.instance.description}" />
+				</j:edit>
+
+				<j:edit label="Hidden">
+					<p:selectBooleanCheckbox value="#{permissionHome.instance.hidden}" />
+				</j:edit>
+
+				<j:edit label="Read only">
+					<p:selectBooleanCheckbox value="#{permissionHome.instance.readOnly}" />
+				</j:edit>
+				
+				<j:edit label="Group">
+					<p:selectOneMenu value="#{permissionHome.instance.permissionGroup}"
+						converter="entityConverter">
+						<f:selectItems var="_permissionGroup"
+							value="#{permissionGroups}" 
+							itemValue="#{_permissionGroup}"
+							itemLabel="#{_permissionGroup.name}"/>
+					</p:selectOneMenu>
+				</j:edit>
+
+				<p:commandButton action="#{permissionHome.save()}" value="#{permissionHome.managed ? 'Edit' : 'Create'}"
+					ajax="false"></p:commandButton>
+				<p:commandButton action="#{permissionHome.cancel()}"
+					value="Cancel" ajax="false"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

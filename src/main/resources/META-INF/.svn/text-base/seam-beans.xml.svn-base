@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:s="urn:java:ee" xmlns:c="urn:java:org.jboss.solder.core"
+	xmlns:f="urn:java:org.jboss.seam.faces.environment" xmlns:o="urn:java:org.apache.myfaces.extensions.cdi.jsf.impl.util">
+
+	<!-- Desactive Seam Faces FacesContext Producers -->
+	<f:FacesContextProducer>
+		<s:replaces />
+		<c:Veto></c:Veto>
+	</f:FacesContextProducer>
+
+	<!-- Desactive Apache CODI FacesContext Producers <o:FacesInformationProducer> 
+		<s:replaces/> <c:Veto></c:Veto> </o:FacesInformationProducer> -->
+</beans>

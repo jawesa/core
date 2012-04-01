@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layout/template/common/head.xhtml">
+	
+	<ui:define name="body_content">
+		
+		<ui:include src="/WEB-INF/layout/fragment/section/tag/menuTag.xhtml" />
+		
+		<div class="page_right">
+			<ui:insert name="content">[PAGE CONTENT]</ui:insert>
+		</div>
+	</ui:define>
+	
+</ui:composition>

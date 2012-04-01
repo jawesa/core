@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p:panel id="panelMap" header="Plateau de jeu" style="width:800px;margin:0px auto;">
+				<p:dataGrid var="_square" value="#{mapAction.displaySquares}"
+					columns="11" rows="121">
+					
+					<p:column style="width:50px;height:50px;">
+						<p:commandLink update="dialogActionsContent" oncomplete="dialogActions.show()" process="@this">
+							<f:setPropertyActionListener value="#{_square}" target="#{mapAction.square}" />
+						
+							<p:panel id="panelSquare" style="width:50px;height:50px;background-color:#{_square.land.color}">
+								<h:outputText value="X" rendered="#{_square.occupied}"/>
+							</p:panel>
+						</p:commandLink>
+						<p:tooltip for="panelSquare">
+							<h:panelGrid columns="1">
+								<h:outputText value="Position : #{_square.x} x #{_square.y}" />
+								<h:outputText value="Terrain : #{_square.land.name}" />
+								<h:outputText value="Player : #{_square.player.name} (#{_square.player.pv} / #{_square.player.pvMax} PV)" rendered="#{_square.occupied}" />
+							</h:panelGrid>
+						</p:tooltip>
+					</p:column>
+					
+				</p:dataGrid>
+			</p:panel>
+		</h:form>
+		
+		<h:form prependId="false">
+			<p:dialog header="Actions" widgetVar="dialogActions" modal="true">
+				<p:panel id="dialogActionsContent">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Move" action="#{mapAction.move()}" update="panelMap" rendered="#{!mapAction.square.occupied}" oncomplete="dialogActions.hide()"/>
+						<p:commandButton value="Attack (-10 PV)" action="#{mapAction.attack()}" update="panelMap" rendered="#{mapAction.square.occupied}" oncomplete="dialogActions.hide()"/>
+						<p:commandButton value="Strong Attack (-30 PV)" action="#{mapAction.strongAttack()}" update="panelMap" rendered="#{mapAction.square.occupied}" oncomplete="dialogActions.hide()"/>
+						<p:commandButton value="Heal (+20 PV)" action="#{mapAction.heal()}" update="panelMap" rendered="#{mapAction.square.occupied}" oncomplete="dialogActions.hide()"/>
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

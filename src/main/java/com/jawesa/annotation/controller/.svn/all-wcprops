@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/jawesa/!svn/ver/9/trunk/jawesa/src/main/java/com/jawesa/annotation/controller
+END
+EntityController.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/jawesa/!svn/ver/3/trunk/jawesa/src/main/java/com/jawesa/annotation/controller/EntityController.java
+END
+ControllerQualifier.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/jawesa/!svn/ver/8/trunk/jawesa/src/main/java/com/jawesa/annotation/controller/ControllerQualifier.java
+END
+PersistenceControllerQualifier.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/jawesa/!svn/ver/9/trunk/jawesa/src/main/java/com/jawesa/annotation/controller/PersistenceControllerQualifier.java
+END

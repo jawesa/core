@@ -1,0 +1,35 @@
+package com.jawesa.controller.common;
+
+import java.io.Serializable;
+
+import javax.inject.Inject;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+
+import org.jboss.seam.transaction.DefaultTransaction;
+import org.jboss.seam.transaction.SeamTransaction;
+
+@SuppressWarnings("serial")
+public class TransactionController implements Serializable {
+	@Inject
+	@DefaultTransaction
+	private SeamTransaction transaction;
+
+	public SeamTransaction getTransaction() {
+		return transaction;
+	}
+
+	public void beginTransaction() throws NotSupportedException,
+			SystemException {
+		transaction.begin();
+	}
+
+	public void commitTransaction() throws SecurityException,
+			IllegalStateException, RollbackException, HeuristicMixedException,
+			HeuristicRollbackException, SystemException {
+		transaction.commit();
+	}
+}

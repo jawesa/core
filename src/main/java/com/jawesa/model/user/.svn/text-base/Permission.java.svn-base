@@ -1,0 +1,59 @@
+package com.jawesa.model.user;
+
+import javax.persistence.Entity;
+
+import org.hibernate.annotations.Type;
+
+import com.jawesa.model.common.AbstractLongIdEntity;
+import com.jawesa.model.common.I18nLabel;
+import com.jawesa.model.common.I18nUserType;
+
+@Entity
+public class Permission extends AbstractLongIdEntity {
+	private String action;
+	private String target;
+	private boolean readOnly;
+	private boolean hidden;
+	@Type(type = I18nUserType.NAME)
+	private I18nLabel descriptionLabel = new I18nLabel();
+
+	public String getDescription() {
+		return this.descriptionLabel.getValue();
+	}
+
+	public void setDescription(String description) {
+		this.descriptionLabel.setValue(description);
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+}

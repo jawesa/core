@@ -1,0 +1,82 @@
+package com.jawesa.model.common;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.ManagedBean;
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.faces.context.FacesContext;
+
+@ManagedBean
+@SuppressWarnings("serial")
+public class I18nLabel implements Serializable {
+	private Map<Locale, String> map = new HashMap<Locale, String>();
+
+	public String getValue() {
+		return getValue(getCurrentLocale());
+	}
+
+	public String getValue(Locale locale) {
+		return map.get(locale);
+	}
+
+	public void setValue(String value) {
+		setValue(getCurrentLocale(), value);
+	}
+
+	public void setValue(Locale locale, String value) {
+		map.put(locale, value);
+	}
+
+	private Locale getCurrentLocale() {
+		ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
+		ELContext context = FacesContext.getCurrentInstance().getELContext();
+		String expression = "#{userLocale}";
+		Object result = expressionFactory.createValueExpression(context,
+				expression, Locale.class).getValue(context);
+
+		if(result != null) {
+			return Locale.class.cast(result);
+		}
+		else {
+			return null;
+		}
+	}
+
+	public String serialize() {
+		StringBuffer buffer = new StringBuffer();
+		for (Entry<Locale, String> entry : map.entrySet()) {
+			String localeStr = entry.getKey().toString();
+			buffer.append("[");
+			buffer.append(localeStr);
+			buffer.append("]");
+			buffer.append(entry.getValue());
+			buffer.append("[/");
+			buffer.append(localeStr);
+			buffer.append("]");
+		}
+		return buffer.toString();
+	}
+
+	public void explode(String serializedValue) {
+		if (map == null) {
+			map = new HashMap<Locale, String>();
+		}
+
+		String regex = "\\[[a-z]{2}_[A-Z]{2}\\].*?\\[/[a-z]{2}_[A-Z]{2}\\]";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(serializedValue);
+
+		while (m.find()) {
+			Locale locale = new Locale(m.group().substring(1, 3), m.group()
+					.substring(4, 6));
+			map.put(locale, m.group().substring(7, m.group().length() - 8));
+		}
+	}
+}

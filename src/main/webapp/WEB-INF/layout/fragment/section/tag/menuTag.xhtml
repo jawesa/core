@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="left_menu">
+		<h:form>
+			<p:accordionPanel value="#{tagMenuItems}" var="_tagMenuItem"
+				activeIndex="#{tagDisplayAction.menuIndex}">
+				<p:tab title="#{_tagMenuItem.name}">
+					<p:menu model="#{_tagMenuItem.menuModel}"></p:menu>
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+	</div>
+</ui:composition>

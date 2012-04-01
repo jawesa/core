@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/jawesa/!svn/ver/16/trunk/jawesa/src/main/resources/META-INF
+END
+persistence.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/jawesa/!svn/ver/3/trunk/jawesa/src/main/resources/META-INF/persistence.xml
+END
+seam-beans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/jawesa/!svn/ver/24/trunk/jawesa/src/main/resources/META-INF/seam-beans.xml
+END

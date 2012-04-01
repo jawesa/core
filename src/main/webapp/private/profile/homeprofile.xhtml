@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+
+		<p:panel header="Votre profil">
+			<h:form>
+				<j:display label="Login" for="login">
+					<h:outputText id="login" value="#{identity.user.login}" />
+				</j:display>
+
+				<j:edit label="Email">
+					<p:inputText id="email" value="#{identity.user.email}"></p:inputText>
+				</j:edit>
+
+				<j:edit label="Website">
+					<p:inputText id="website" value="#{identity.user.website}"></p:inputText>
+				</j:edit>
+
+				<p:commandButton ajax="false" value="Modifier"></p:commandButton>
+			</h:form>
+
+			<p:tabView>
+				<p:tab title="Roles et permissions">
+					<h:form>
+						<h:outputText value="Vous êtes super user." rendered="#{identity.superUser}" />
+					
+						<h:panelGrid columns="2">
+							<p:fieldset legend="Roles">
+								<p:dataList value="#{identity.roles}" var="_role"
+									itemType="circle">
+									<h:outputText value="#{_role.name}" />
+								</p:dataList>
+							</p:fieldset>
+
+							<p:fieldset legend="Permissions">
+								<p:dataTable value="#{identity.permissions}" var="_permission">
+									<p:column headerText="Action" rendered="#{!_permission.hidden or identity.hasPermission('see','hiddenPermission')}">
+										<h:outputText value="#{_permission.action}" />
+									</p:column>
+									<p:column headerText="Target" rendered="#{!_permission.hidden or identity.hasPermission('see','hiddenPermission')}">
+										<h:outputText value="#{_permission.target}" />
+									</p:column>
+									<p:column headerText="Description" rendered="#{!_permission.hidden or identity.hasPermission('see','hiddenPermission')}">
+										<h:outputText value="#{_permission.description}" />
+									</p:column>
+								</p:dataTable>
+							</p:fieldset>
+						</h:panelGrid>
+					</h:form>
+				</p:tab>
+			</p:tabView>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

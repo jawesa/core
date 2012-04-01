@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{tagAttributeHome.id}" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form prependId="false">
+			<!-- PANEL : TAG INFORMATIONS -->
+			<p:panel header="Edit Tag Attribute">
+				<ui:include src="/WEB-INF/layout/admin/tag/tagattribute/editfields.xhtml" />
+				
+				<p:commandButton ajax="false" action="#{tagAttributeHome.create()}" value="Create" rendered="#{!tagAttributeHome.managed}"></p:commandButton>
+				<p:commandButton ajax="false" action="#{tagAttributeHome.update()}" value="Update" rendered="#{tagAttributeHome.managed}"></p:commandButton>
+				<p:commandButton ajax="false" action="#{tagAttributeHome.cancel()}" immediate="true" value="Cancel"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

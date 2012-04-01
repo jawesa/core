@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/jawesa/!svn/ver/19/trunk/jawesa/src/main/resources/messages
+END
+messages_fr_FR.properties
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/jawesa/!svn/ver/21/trunk/jawesa/src/main/resources/messages/messages_fr_FR.properties
+END
+messages.properties
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/jawesa/!svn/ver/21/trunk/jawesa/src/main/resources/messages/messages.properties
+END
+messages_en_US.properties
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/jawesa/!svn/ver/19/trunk/jawesa/src/main/resources/messages/messages_en_US.properties
+END

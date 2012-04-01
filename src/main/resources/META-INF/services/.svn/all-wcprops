@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/jawesa/!svn/ver/21/trunk/jawesa/src/main/resources/META-INF/services
+END
+org.apache.myfaces.extensions.cdi.core.api.config.CodiConfig
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/jawesa/!svn/ver/21/trunk/jawesa/src/main/resources/META-INF/services/org.apache.myfaces.extensions.cdi.core.api.config.CodiConfig
+END

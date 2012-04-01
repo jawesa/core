@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:panel header="Permission List">
+				<p:button outcome="/admin/user/permission/edit" value="Create permission" />
+			
+				<p:dataTable value="#{permissionAction.permissionsGroup}" var="_permissionGroup">
+					<p:subTable var="_permission" value="#{permissionAction.getPermissionsByPermissionGroup(_permissionGroup)}">
+						<f:facet name="header">
+							<h:outputText value="#{_permissionGroup.name}" />
+						</f:facet>
+						
+						<p:columnGroup type="header">
+							<p:row>
+								<p:column headerText="Id"/>
+								<p:column headerText="Action"/>
+								<p:column headerText="Target"/>
+								<p:column headerText="Description"/>
+								<p:column headerText="Hidden"/>
+								<p:column headerText="Read Only"/>
+								<p:column headerText="Actions"/>
+							</p:row>
+						</p:columnGroup>
+					
+						<p:column headerText="Id">
+							<h:outputText value="#{_permission.id}" />
+						</p:column>
+						<p:column headerText="Action">
+							<h:outputText value="#{_permission.action}" />
+						</p:column>
+						<p:column headerText="Target">
+							<h:outputText value="#{_permission.target}" />
+						</p:column>
+						<p:column headerText="Description">
+							<h:outputText value="#{_permission.description}" />
+						</p:column>
+						<p:column headerText="Hidden">
+							<j:iconBoolean value="#{_permission.hidden}"></j:iconBoolean>
+						</p:column>
+						<p:column headerText="Read Only">
+							<j:iconBoolean value="#{_permission.readOnly}"></j:iconBoolean>
+						</p:column>
+						<p:column headerText="Actions">
+							<p:button outcome="/admin/user/permission/display" value="View">
+								<f:param name="id" value="#{_permission.id}"></f:param>
+							</p:button>
+							<p:button outcome="/admin/user/permission/edit" value="Edit">
+								<f:param name="id" value="#{_permission.id}"></f:param>
+							</p:button>
+							<p:commandButton value="Delete" action="#{permissionHome.delete()}" ajax="false">
+								<f:setPropertyActionListener target="#{permissionHome.id}" value="#{_permission.id}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</p:column>
+					</p:subTable>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

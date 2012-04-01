@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+		<p:panel header="Login">
+			<h:form>
+				<j:edit label="Login">
+					<p:inputText value="#{credentials.username}" id="username"
+						required="true" label="username" />
+				</j:edit>
+
+				<j:edit label="Password">
+					<p:password value="#{credentials.password}" id="password"
+						required="true" label="password" feedback="false" />
+				</j:edit>
+
+				<p:commandButton value="Login" action="#{loginAction.login()}"
+					ajax="false" />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

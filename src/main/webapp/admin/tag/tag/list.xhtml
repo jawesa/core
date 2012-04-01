@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+
+		<p:panel header="Tags">
+			<h:panelGroup rendered="#{empty tags}">
+				<em>No tags defined.</em>
+			</h:panelGroup>
+
+			<h:form>
+				<p:dataTable id="tagsList" var="_tag" value="#{tags}"
+					rendered="#{not empty tags}">
+					<p:column headerText="Name" sortBy="#{_tag.name}">
+						<h:outputText value="#{_tag.name}" />
+					</p:column>
+					<p:column headerText="Class" sortBy="#{_tag.tagClass}">
+						<h:outputText value="#{_tag.tagClass}" />
+					</p:column>
+					<p:column headerText="Type" sortBy="#{_tag.tagType}">
+						<h:outputText value="#{_tag.tagType}" />
+					</p:column>
+					<p:column headerText="Family" sortBy="#{_tag.tagFamily}">
+						<h:outputText value="#{_tag.tagFamily}" />
+					</p:column>
+					<p:column headerText="Rendered Type" sortBy="#{_tag.renderedType}">
+						<h:outputText value="#{_tag.renderedType}" />
+					</p:column>
+					<p:column headerText="Rendered Class"
+						sortBy="#{_tag.renderedClass}">
+						<h:outputText value="#{_tag.renderedClass}" />
+					</p:column>
+					<p:column headerText="Handler Class" sortBy="#{_tag.handlerClass}">
+						<h:outputText value="#{_tag.handlerClass}" />
+					</p:column>
+					<p:column headerText="Status" sortBy="#{_tag.status}">
+						<h:outputText value="#{_tag.status}" />
+					</p:column>
+					<p:column headerText="Action">
+						<!--
+						<p:commandButton ajax="false" action="/private/tag/edittag.xhtml?id=#{_tag.id}"
+							image="ui-icon ui-icon-search">
+							<f:setPropertyActionListener value="#{_tag.id}"
+								target="#{tagHome.id}" />
+						</p:commandButton>
+						<p:commandButton ajax="false" action="/private/tag/viewtag.xhtml?id=#{_tag.id}"
+							image="ui-icon ui-icon-edit">
+							<f:setPropertyActionListener value="#{_tag.id}"
+								target="#{tagHome.id}" />
+						</p:commandButton>
+						 -->
+						<p:button outcome="/admin/tag/tag/display" value="View">
+							<f:param name="id" value="#{_tag.id}"></f:param>
+						</p:button>
+						<p:button outcome="/admin/tag/tag/edit" value="Edit">
+							<f:param name="id" value="#{_tag.id}"></f:param>
+						</p:button>
+						<p:commandButton value="Delete" action="#{tagHome.delete()}" ajax="false">
+							<f:setPropertyActionListener target="#{tagHome.id}" value="#{_tag.id}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton ajax="false" value="Ajouter" />
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

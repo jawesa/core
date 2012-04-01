@@ -1,0 +1,136 @@
+package com.jawesa.controller.common;
+
+import java.io.Serializable;
+
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+
+import org.jboss.seam.international.status.Messages;
+import org.jboss.seam.international.status.builder.BundleKey;
+import org.jboss.seam.international.status.builder.BundleTemplateMessage;
+import org.jboss.seam.international.status.builder.TemplateMessage;
+
+import com.jawesa.annotation.controller.ControllerQualifier;
+
+@ControllerQualifier
+@SuppressWarnings("serial")
+public class Controller implements Serializable {
+	// @Inject
+	// private Logger log;
+
+	@Inject
+	private Messages messages;
+
+	@Inject
+	private TransactionController transactionController;
+
+	public void beginTransaction() throws NotSupportedException,
+			SystemException {
+		transactionController.beginTransaction();
+	}
+
+	public void commitTransaction() throws SecurityException,
+			IllegalStateException, RollbackException, HeuristicMixedException,
+			HeuristicRollbackException, SystemException {
+		transactionController.commitTransaction();
+	}
+
+	public FacesContext getFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	public UIViewRoot getViewRoot() {
+		return getFacesContext().getViewRoot();
+	}
+
+	private BundleKey getMessagesBundleKey(String key) {
+		return (new BundleKey("messages.messages", key));
+	}
+
+	protected boolean isTransactionMarkedRollback() {
+		try {
+			return this.transactionController.getTransaction()
+					.isMarkedRollback();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	// public Logger getLog() {
+	// return log;
+	// }
+	//
+	// public void setLog(Logger log) {
+	// this.log = log;
+	// }
+
+	public TemplateMessage info(String message, Object... params) {
+		return messages.info(message, params);
+	}
+
+	public TemplateMessage info(String message) {
+		return info(message, new Object[0]);
+	}
+
+	public BundleTemplateMessage infoFromBundle(String key, Object... params) {
+		return messages.info(getMessagesBundleKey(key), params);
+	}
+
+	public BundleTemplateMessage infoFromBundle(String key) {
+		return infoFromBundle(key, new Object[0]);
+	}
+
+	public TemplateMessage warn(String message, Object... params) {
+		return messages.warn(message, params);
+	}
+
+	public TemplateMessage warn(String message) {
+		return warn(message, new Object[0]);
+	}
+
+	public BundleTemplateMessage warnFromBundle(String key, Object... params) {
+		return messages.warn(getMessagesBundleKey(key), params);
+	}
+
+	public BundleTemplateMessage warnFromBundle(String key) {
+		return warnFromBundle(key, new Object[0]);
+	}
+
+	public TemplateMessage error(String message, Object... params) {
+		return messages.error(message, params);
+	}
+
+	public TemplateMessage error(String message) {
+		return error(message, new Object[0]);
+	}
+
+	public BundleTemplateMessage errorFromBundle(String key, Object... params) {
+		return messages.error(getMessagesBundleKey(key), params);
+	}
+
+	public BundleTemplateMessage errorFromBundle(String key) {
+		return errorFromBundle(key, new Object[0]);
+	}
+
+	public TemplateMessage fatal(String message, Object... params) {
+		return messages.fatal(message, params);
+	}
+
+	public TemplateMessage fatal(String message) {
+		return fatal(message, new Object[0]);
+	}
+
+	public BundleTemplateMessage fatalFromBundle(String key, Object... params) {
+		return messages.fatal(getMessagesBundleKey(key), params);
+	}
+
+	public BundleTemplateMessage fatalFromBundle(String key) {
+		return fatalFromBundle(key, new Object[0]);
+	}
+}

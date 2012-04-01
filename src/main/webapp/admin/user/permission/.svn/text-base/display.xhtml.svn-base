@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="id" value="#{permissionHome.id}"></f:viewParam>
+		</f:metadata>
+	
+		<h:form>
+			<p:panel
+				header="Display Permission">
+				<j:display label="Action">
+					<h:outputText value="#{permissionHome.instance.action}"></h:outputText>
+				</j:display>
+
+				<j:display label="Target">
+					<h:outputText value="#{permissionHome.instance.target}"></h:outputText>
+				</j:display>
+
+				<j:display label="Description">
+					<h:outputText value="#{permissionHome.instance.description}"></h:outputText>
+				</j:display>
+
+				<j:display label="Hidden">
+					<h:outputText value="#{permissionHome.instance.hidden}"></h:outputText>
+				</j:display>
+
+				<j:display label="Read only">
+					<h:outputText value="#{permissionHome.instance.readOnly}"></h:outputText>
+				</j:display>
+
+				<p:commandButton action="/admin/user/permission/list"
+					value="Back" ajax="false"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:cc="http://java.sun.com/jsf/composite">
+
+   <cc:interface>
+      <cc:attribute name="label" required="true"/>
+      <cc:attribute name="for" required="true"/>
+   </cc:interface>
+   <cc:implementation>
+
+      <div class="entry" id="#{cc.clientId}">
+         <h:outputLabel id="label" for="#{cc.attrs.for}" value="#{cc.attrs.label}">
+            <h:outputText value=" :" />
+         </h:outputLabel>
+         <h:panelGroup >
+	         <span>
+	            <cc:insertChildren/>
+	         </span>
+         </h:panelGroup>
+      </div>
+
+   </cc:implementation>
+</ui:composition>

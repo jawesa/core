@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="id" value="#{permissionHome.id}"></f:viewParam>
+		</f:metadata>
+	
+		<h:form>
+			<p:panel
+				header="#{permissionHome.managed ? 'Edit' : 'Create'} Permission">
+				<j:edit label="Action">
+					<p:inputText label="action"
+						value="#{permissionHome.instance.action}"></p:inputText>
+				</j:edit>
+
+				<j:edit label="Target">
+					<p:inputText label="action"
+						value="#{permissionHome.instance.target}"></p:inputText>
+				</j:edit>
+
+				<j:edit label="Description">
+					<p:inputText label="action"
+						value="#{permissionHome.instance.description}"></p:inputText>
+				</j:edit>
+
+				<j:edit label="Hidden">
+					<p:selectBooleanCheckbox value="#{permissionHome.instance.hidden}"></p:selectBooleanCheckbox>
+				</j:edit>
+
+				<j:edit label="Read only">
+					<p:selectBooleanCheckbox
+						value="#{permissionHome.instance.readOnly}"></p:selectBooleanCheckbox>
+				</j:edit>
+
+				<p:commandButton action="#{permissionHome.save()}" value="#{permissionHome.managed ? 'Edit' : 'Create'}"
+					ajax="false"></p:commandButton>
+				<p:commandButton action="#{permissionHome.cancel()}"
+					value="Cancel" ajax="false"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

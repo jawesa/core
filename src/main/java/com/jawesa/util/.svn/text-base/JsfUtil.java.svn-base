@@ -1,0 +1,14 @@
+package com.jawesa.util;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.inject.Named;
+
+@Named
+public class JsfUtil {
+	public static <E> List<E> asList(Set<E> mySet) {
+		return new ArrayList<E>(mySet);
+	}
+}

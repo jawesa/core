@@ -1,0 +1,32 @@
+package com.jawesa.util;
+
+import java.util.Iterator;
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+
+import org.jboss.seam.international.locale.DefaultLocale;
+import org.jboss.seam.international.locale.LocaleConfiguration;
+
+public class LocalesConfiguration extends LocaleConfiguration {
+	@Inject
+	private FacesContext facesContext;
+	
+	@Produces
+	@DefaultLocale
+	public String getDefaultLocaleKey() {
+		return facesContext.getApplication().getDefaultLocale().toString();
+	}
+	
+	@PostConstruct
+	public void init() {
+		Iterator<Locale> supportedLocales = facesContext.getApplication().getSupportedLocales();
+		
+		while(supportedLocales.hasNext()) {
+			addSupportedLocaleKey(supportedLocales.next().toString());
+		}
+	}
+}

@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:r="http://richfaces.org/rich"
+	xmlns:ft="http://primefaces.prime.com.tr/facestrace"
+	template="/WEB-INF/layout/template/common/master.xhtml">
+
+	<ui:define name="master_content">
+		<h:head>
+			<title>Jawesa</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<h:outputStylesheet name="css/screen.css" />
+		</h:head>
+
+		<h:body>
+			<r:jQuery rendered="false" />
+			<p:growl id="growl" showDetail="false" life="5000" autoUpdate="true"
+				globalOnly="true" />
+
+			<ui:include src="/WEB-INF/layout/fragment/common/topMenuBar.xhtml"></ui:include>
+
+			<div id="page">
+				<p:messages globalOnly="true" showDetail="false" autoUpdate="true"></p:messages>
+
+				<ui:insert name="body_content">[BODY CONTENT]</ui:insert>
+			</div>
+
+			<ui:debug hotkey="M" rendered="true" />
+
+			<p:panel
+				header="Faces Traces Debug (you can also use Facelets Debug by pressing CTRL+SHIFT+M hotkey)"
+				collapsed="#{!identity.debug}" toggleable="true" toggleSpeed="1000"
+				closable="true" closeSpeed="2000" style="clear:both;">
+				<ft:trace />
+			</p:panel>
+
+			<p:dialog widgetVar="dialogDebugTheme" header="Theme Debug">
+				<h:form>
+					<p:dataTable value="#{themeSelector.listTheme}" var="_entry">
+						<p:column headerText="Key">
+							<h:outputText value="#{_entry.key}" />
+						</p:column>
+						<p:column headerText="Value">
+							<h:outputText value="#{_entry.value}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
+		</h:body>
+	</ui:define>
+
+</ui:composition>

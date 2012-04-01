@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="id" value="#{tagHome.id}" converter="longConverter" />
+		</f:metadata>
+
+		<p:panel header="EditTag">
+
+			<h:form>
+				<j:display label="Name">
+					#{tagHome.instance.name}
+				</j:display>
+				<j:display label="Class">
+					#{tagHome.instance.tagClass}
+				</j:display>
+				<j:display label="Tag Type">
+					#{tagHome.instance.tagType}
+				</j:display>
+				<j:display label="Family">
+					#{tagHome.instance.tagFamily}
+				</j:display>
+				<j:display label="Rendered Type">
+					#{tagHome.instance.renderedType}
+				</j:display>
+				<j:display label="Rendered Class">
+					#{tagHome.instance.renderedClass}
+				</j:display>
+				<j:display label="Handler Class">
+					#{tagHome.instance.handlerClass}
+				</j:display>
+				<j:display label="Status">
+					#{tagHome.instance.status}
+				</j:display>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

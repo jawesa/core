@@ -1,0 +1,160 @@
+package com.jawesa.action.common;
+
+import java.util.List;
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
+import javax.enterprise.event.Observes;
+import javax.faces.component.UIComponent;
+import javax.inject.Inject;
+
+import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.model.DefaultMenuModel;
+import org.primefaces.model.MenuModel;
+
+import com.jawesa.controller.common.AbstractMutable;
+
+@SuppressWarnings("serial")
+public abstract class Selector<E> extends AbstractMutable {
+	protected E defaultValue;
+	protected E value;
+	protected List<E> availableValues;
+	protected MenuModel menuModel;
+
+	@Inject
+	private transient ELContext elContext;
+
+	protected abstract void loadAvailableValues();
+
+	protected abstract boolean isMenuModelEnable();
+
+	protected String selectorName = null;
+	protected boolean menuWithLabel = true;
+	protected boolean menuWithIcon = false;
+
+	public void setValue(E value) {
+		this.value = value;
+	}
+
+	public E getValue() {
+		if (value != null) {
+			return value;
+		} else {
+			return defaultValue;
+		}
+	}
+
+	public void select(E value) {
+		if (availableValues != null && value != null
+				&& availableValues.contains(value)) {
+			setDirty(this.value, value);
+			this.value = value;
+		} else {
+			this.value = null;
+		}
+	}
+
+	public void selectString(String stringValue) {
+		E value = string2value(stringValue);
+		select(value);
+	}
+
+	@SuppressWarnings("unused")
+	@PostConstruct
+	private void init() {
+		initSelector();
+
+		if (defaultValue == null && availableValues != null
+				&& !availableValues.isEmpty()) {
+			defaultValue = availableValues.iterator().next();
+		}
+	}
+
+	protected void initSelector() {
+		loadAvailableValues();
+		if (isMenuModelEnable()) {
+			loadMenuModel();
+		}
+	}
+
+	public List<E> getAvailableValues() {
+		return availableValues;
+	}
+	
+	// What if the user change locale ?
+	public void changeLocale(@Observes Locale locale) {
+        if(isMenuModelEnable()) {
+        	refreshMenuModelLabels();
+        }
+    }
+
+	public MenuModel getMenuModel() {
+		return menuModel;
+	}
+
+	protected void loadMenuModel() {
+		menuModel = new DefaultMenuModel();
+
+		ExpressionFactory ef = ExpressionFactory.newInstance();
+		StringBuffer sb;
+
+		for (E value : availableValues) {
+			MenuItem item = new MenuItem();
+			item.setAjax(false);
+			if (menuWithLabel) {
+				item.setValue(getDisplayValue(value));
+			}
+			if (menuWithIcon) {
+				item.setIcon(value2icon(value));
+			}
+			sb = new StringBuffer();
+			sb.append("#{").append(selectorName).append(".selectString('")
+					.append(value2string(value)).append("')}");
+			MethodExpression me = ef.createMethodExpression(elContext,
+					sb.toString(), null, new Class[0]);
+			item.setActionExpression(me);
+			menuModel.addMenuItem(item);
+		}
+	}
+
+	protected void refreshMenuModelLabels() {
+		if (menuModel != null) {
+		    int i = 0;
+			for (UIComponent item : menuModel.getContents()) {
+			    if(item instanceof MenuItem)
+			    {
+			        MenuItem menuItem = (MenuItem) item;
+    				E value = getAvailableValues().get(i);
+    				if (menuWithLabel) {
+    				    menuItem.setValue(getDisplayValue(value));
+    				}
+    				if (menuWithIcon) {
+    				    menuItem.setIcon(value2icon(value));
+    				}
+			    }
+			    i++;
+			}
+		}
+	}
+
+	// Override following methods in order to enable MenuModel
+	// and Cookie capabilities
+	protected String value2string(E value) {
+		return null;
+	}
+
+	protected String value2icon(E value) {
+		return "ui-icon";
+	}
+
+	protected E string2value(String stringValue) {
+		return null;
+	}
+
+	protected String getDisplayValue(E value) {
+		return null;
+	}
+}

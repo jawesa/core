@@ -1,0 +1,137 @@
+package com.jawesa.action.user;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
+
+import com.jawesa.annotation.qualifier.user.LoggedIn;
+import com.jawesa.model.user.Permission;
+import com.jawesa.model.user.Role;
+import com.jawesa.model.user.User;
+
+@Named
+@SessionScoped
+@SuppressWarnings("serial")
+public class Identity implements Serializable {
+	@Produces
+	@LoggedIn
+	private User user;
+	private boolean superUser = false;
+	private boolean debug = false;
+	private List<Role> roles;
+	private List<Permission> permissions;
+
+	public void login(User user) {
+		this.user = user;
+		roles = new ArrayList<Role>(user.getRoles());
+		permissions = new ArrayList<Permission>();
+		
+		if(roles != null && !roles.isEmpty()) {
+			for(Role r : roles) {
+				if(r.getPermissions() != null && !r.getPermissions().isEmpty()) {
+					for(Permission p : r.getPermissions()) {
+						if(!permissions.contains(p)) {
+							permissions.add(p);
+						}
+					}
+				}
+			}
+		}
+		
+		superUser = checkSuperUser();
+	}
+	
+	public boolean isLoggedIn() {
+		return user != null;
+	}
+
+	public void logout() {
+		user = null;
+		superUser = false;
+		roles = null;
+		permissions = null;
+	}
+
+	public boolean hasPermission(String action, String target) {
+		if (isSuperUser()) {
+			return true;
+		} else {
+			return containsPermission(action, target);
+		}
+	}
+
+	public boolean hasRole(String slug) {
+		return containsRole(slug);
+	}
+
+	private boolean containsPermission(String action, String target) {
+		if (action == null || target == null) {
+			return false;
+		} else if (permissions == null || permissions.isEmpty()) {
+			return false;
+		} else {
+			for (Permission p : permissions) {
+				if (action.equalsIgnoreCase(p.getAction())
+						&& target.equalsIgnoreCase(p.getTarget())) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
+	private boolean containsRole(String slug) {
+		if (slug == null) {
+			return false;
+		} else if (roles == null || roles.isEmpty()) {
+			return false;
+		} else {
+			for (Role r : roles) {
+				if (slug.equalsIgnoreCase(r.getSlug())) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+	
+	private boolean checkSuperUser() {
+		return containsPermission("do", "all");
+	}
+	
+	public void enableDebug() {
+		debug = true;
+	}
+	
+	public void disableDebug() {
+		debug = false;
+	}
+	
+	public boolean isSuperUser() {
+		return superUser;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+
+		<p:panel header="Tags Attributes">
+			<h:form>
+				<p:dataTable id="dataTableTagAttribute" var="_tagAttribute"
+					value="#{tagAttributeDataModel}" paginator="true"
+					rows="10" lazy="true"
+					rowsPerPageTemplate="1,5,10,15"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+					
+					<p:column headerText="Name">
+						<h:outputText value="#{_tagAttribute.name}" />
+					</p:column>
+					<p:column headerText="Required">
+						<j:iconBoolean value="#{_tagAttribute.required}" />
+					</p:column>
+					<p:column headerText="Type">
+						<h:outputText value="#{_tagAttribute.typeDisplayValue}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_tagAttribute.description}" />
+					</p:column>
+					<p:column headerText="Action">
+						<p:button outcome="edit" value="Edit">
+							<f:param name="id" value="#{_tagAttribute.id}"></f:param>
+						</p:button>
+						<p:commandButton value="Delete" action="#{tagAttributeHome.delete()}"
+							ajax="false">
+							<f:setPropertyActionListener target="#{tagAttributeHome.id}"
+								value="#{_tagAttribute.id}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:button outcome="edit" value="Create" />
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

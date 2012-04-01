@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:cc="http://java.sun.com/jsf/composite">
+
+   <cc:interface>
+      <cc:attribute name="value" required="true"/>
+      <cc:attribute name="header" required="false" default=""/>
+      <cc:attribute name="style" required="false" default=""/>
+      <cc:attribute name="styleClass" required="false" default=""/>
+      <cc:attribute name="headerKey" required="false" default=""/>
+      <cc:attribute name="styleKey" required="false" default=""/>
+      <cc:attribute name="styleClassKey" required="false" default=""/>
+      <cc:attribute name="headerValue" required="false" default=""/>
+      <cc:attribute name="styleValue" required="false" default=""/>
+      <cc:attribute name="styleClassValue" required="false" default=""/>
+      <cc:attribute name="resourceBundle" required="false" default=""/>
+      <cc:attribute name="resourceBundleTarget" required="false" default="none"/>
+   </cc:interface>
+   
+   <cc:implementation>
+      <ui:fragment id="frag">
+      	<h:dataTable value="#{jsfUtil.mapToList(cc.attrs.value)}"
+      		var="_entry"
+      		style="#{cc.attrs.style}"
+      		styleClass="#{cc.attrs.styleClass}">
+      		<f:facet name="header">
+      			<h:outputText value="#{cc.attrs.header}" />
+      		</f:facet>
+      		
+      		<h:column style="#{cc.attrs.styleKey}"
+      			styleClass="#{cc.attrs.styleClassKey}">
+      			<f:facet name="header">
+	      			<h:outputText value="#{empty(cc.attrs.headerKey) ? 'Key' : cc.attrs.headerKey}" />
+	      		</f:facet>
+      			<h:outputText value="#{empty(cc.attrs.resourceBundle) ? _entry.key : (cc.attrs.resourceBundleTarget eq 'key' or cc.attrs.resourceBundleTarget eq 'both' ? cc.attrs.resourceBundle[_entry.key] : _entry.key)}" />
+      		</h:column>
+      		
+      		<h:column style="#{cc.attrs.styleValue}"
+      			styleClass="#{cc.attrs.styleClassValue}">
+      			<f:facet name="header">
+	      			<h:outputText value="#{empty(cc.attrs.headerValue) ? 'Value' : cc.attrs.headerValue}" />
+	      		</f:facet>
+      			<h:outputText value="#{empty(cc.attrs.resourceBundle) ? _entry.value : (cc.attrs.resourceBundleTarget eq 'value' or cc.attrs.resourceBundleTarget eq 'both' ? cc.attrs.resourceBundle[_entry.value] : _entry.value)}" />
+      		</h:column>
+      	</h:dataTable>
+      </ui:fragment>
+   </cc:implementation>
+   
+</ui:composition>

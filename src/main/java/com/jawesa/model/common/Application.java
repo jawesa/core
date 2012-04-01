@@ -1,0 +1,21 @@
+package com.jawesa.model.common;
+
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@Entity
+@NamedQueries({ @NamedQuery(name = Application.INIT_TAG_CACHE, query = "select distinct tag from Tag as tag left join fetch tag.library left join fetch tag.attributes left join fetch tag.apis as api left join fetch api.attributes left join fetch tag.jsMethods left join fetch tag.demos as tagDemo left join fetch tagDemo.author left join fetch tagDemo.sourceCodes")})
+public class Application extends AbstractLongIdEntity {
+	public static final String INIT_TAG_CACHE = "Application.initApplicationCache";
+	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}

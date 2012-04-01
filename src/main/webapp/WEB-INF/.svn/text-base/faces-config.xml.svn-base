@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is not required if you don't need any extra configuration. -->
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+	<!-- This descriptor activates the JSF 2.0 Servlet -->
+	<application>
+		<locale-config>
+			<default-locale>en_US</default-locale>
+			<supported-locale>en_US</supported-locale>
+			<supported-locale>fr_FR</supported-locale>
+		</locale-config>
+		
+		<message-bundle>
+			messages.messages
+		</message-bundle>
+	</application>
+
+	<!-- Write your navigation rules here. You are encouraged to use CDI for 
+		creating @Named managed beans. -->
+
+</faces-config>

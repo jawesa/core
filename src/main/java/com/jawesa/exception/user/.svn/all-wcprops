@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/jawesa/!svn/ver/12/trunk/jawesa/src/main/java/com/jawesa/exception/user
+END
+UserNotFoundByEmailException.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/jawesa/!svn/ver/12/trunk/jawesa/src/main/java/com/jawesa/exception/user/UserNotFoundByEmailException.java
+END
+UserNotFoundByLoginException.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/jawesa/!svn/ver/3/trunk/jawesa/src/main/java/com/jawesa/exception/user/UserNotFoundByLoginException.java
+END

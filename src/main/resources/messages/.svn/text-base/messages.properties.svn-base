@@ -1,0 +1,37 @@
+# Locale en_US (default)
+
+#####################################################################
+# COMMON
+# syntax :
+# - common.
+#####################################################################
+welcome=You have successfully deployed the best Java EE 6 web application ever on JBoss AS 7 for the win!
+common.test=Test en_US
+primefaces.theme=aristo
+name=Theme name
+common.theme.submenu.label=Themes
+common.locale.submenu.label=Languages
+common.locale.en_US.label=English
+common.locale.fr_FR.label=French
+
+#####################################################################
+# PAGES
+# syntax :
+# - page.{pageName}.
+# - page.all. (for all pages)
+#####################################################################
+
+
+#####################################################################
+# VALIDATION
+# syntax :
+# - validation.
+#####################################################################
+
+#####################################################################
+# ENTITY
+# syntax : 
+# - entity.{entityName}.label (ex : entity.permission.label=Permission)
+# - entity.{entityName}.labels (ex : entity.permission.labels=Permissions)
+# - entity.{entityName}.attribute.{attributeName} (ex : entity.permission.attribute.action=Action)
+#####################################################################

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/jawesa/!svn/ver/19/trunk/jawesa/src/main/java/com/jawesa/controller/common
+END
+Controller.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/jawesa/!svn/ver/41/trunk/jawesa/src/main/java/com/jawesa/controller/common/Controller.java
+END
+ApplicationController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/jawesa/!svn/ver/24/trunk/jawesa/src/main/java/com/jawesa/controller/common/ApplicationController.java
+END
+PersistenceController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/jawesa/!svn/ver/16/trunk/jawesa/src/main/java/com/jawesa/controller/common/PersistenceController.java
+END
+Mutable.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/jawesa/!svn/ver/3/trunk/jawesa/src/main/java/com/jawesa/controller/common/Mutable.java
+END
+TransactionController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/jawesa/!svn/ver/41/trunk/jawesa/src/main/java/com/jawesa/controller/common/TransactionController.java
+END
+EntityBaseController.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/jawesa/!svn/ver/9/trunk/jawesa/src/main/java/com/jawesa/controller/common/EntityBaseController.java
+END
+EntityLongIdController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/jawesa/!svn/ver/3/trunk/jawesa/src/main/java/com/jawesa/controller/common/EntityLongIdController.java
+END
+MutableController.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/jawesa/!svn/ver/16/trunk/jawesa/src/main/java/com/jawesa/controller/common/MutableController.java
+END
+AbstractMutable.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/jawesa/!svn/ver/18/trunk/jawesa/src/main/java/com/jawesa/controller/common/AbstractMutable.java
+END

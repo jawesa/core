@@ -1,0 +1,94 @@
+package com.jawesa.action.tag;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.TransactionAttribute;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.hibernate.Transaction;
+import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.model.DefaultMenuModel;
+import org.primefaces.model.MenuModel;
+
+import com.jawesa.action.common.Action;
+import com.jawesa.controller.tag.TagController;
+import com.jawesa.model.tag.Tag;
+import com.jawesa.model.tag.TagType;
+
+@Named
+@ApplicationScoped
+@TransactionAttribute
+@SuppressWarnings({ "unchecked", "serial" })
+public class TagMenuAction extends Action {
+	@Inject
+	private TagController tagController;
+
+	private List<TagMenuItem> items = new ArrayList<TagMenuAction.TagMenuItem>();
+
+	@PostConstruct
+	public void init() {
+		Transaction t = tagController.begin();
+		refreshItems();
+		tagController.close(t);
+	}
+	
+	public void refreshItems() {
+		List<TagMenuAction.TagMenuItem> refreshedItems = new ArrayList<TagMenuAction.TagMenuItem>();
+
+		List<TagType> tagTypes = (List<TagType>) tagController.createQuery(
+				"select distinct type from TagType as type left join fetch type.tags as tag left join fetch tag.library as library order by type.menuOrder").getResultList();
+
+		for (TagType tt : tagTypes) {
+			TagMenuItem tmi = new TagMenuItem();
+			tmi.setName(tt.getName());
+			tmi.setMenuModel(new DefaultMenuModel());
+
+			for (Tag tag : tt.getTags()) {
+				MenuItem item = new MenuItem();
+				item.setValue(tag.getName());
+				item.setUrl("/public/tag/display.xhtml?library="+tag.getLibrary().getName().toLowerCase()+"&tag="+tag.getName().toLowerCase()+"/");
+				tmi.getMenuModel().addMenuItem(item);
+			}
+
+			refreshedItems.add(tmi);
+		}
+		
+		setItems(refreshedItems);
+	}
+
+	public class TagMenuItem {
+		private String name;
+		private MenuModel menuModel;
+
+		public MenuModel getMenuModel() {
+			return menuModel;
+		}
+
+		public void setMenuModel(MenuModel menuModel) {
+			this.menuModel = menuModel;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+
+	@Produces
+	@Named("tagMenuItems")
+	public List<TagMenuItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<TagMenuItem> items) {
+		this.items = items;
+	}
+}

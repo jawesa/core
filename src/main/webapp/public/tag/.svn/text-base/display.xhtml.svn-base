@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/tag.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="library" value="#{tagDisplayAction.libraryParam}"></f:viewParam>
+			<f:viewParam name="tag" value="#{tagDisplayAction.tagParam}"></f:viewParam>
+			<f:viewParam name="demo" value="#{tagDisplayAction.demoParam}"></f:viewParam>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:toolbar id="toolbarTagDisplay">
+				<p:toolbarGroup align="left">
+					<p:spacer width="10" />
+
+					<h:outputLink value="display.xhtml">
+						<f:param name="library" value="#{tagDisplayAction.libraryParam}"></f:param>
+						<f:param name="tag" value="#{tagDisplayAction.tagParam}"></f:param>
+						<h:outputText value="#{tagDisplayAction.tag.name}" />
+					</h:outputLink>
+
+					<p:separator></p:separator>
+
+					<h:outputLink value="library.xhtml">
+						<f:param name="library" value="#{tagDisplayAction.libraryParam}"></f:param>
+						<h:outputText value="#{tagDisplayAction.library.name}" />
+					</h:outputLink>
+
+					<p:separator></p:separator>
+
+					<p:menuButton value="Demos"
+						rendered="#{not empty tagDisplayAction.demosMenuModel.menuItems}"
+						model="#{tagDisplayAction.demosMenuModel}">
+					</p:menuButton>
+
+					<p:button id="buttonDoc" value="Doc" image="ui-icon-document"
+						outcome="display.xhtml">
+						<f:param name="library" value="#{tagDisplayAction.libraryParam}"></f:param>
+						<f:param name="tag" value="#{tagDisplayAction.tagParam}"></f:param>
+						<f:param name="demo" value="documentation"></f:param>
+					</p:button>
+					<p:tooltip for="buttonDoc" value="Documentation"></p:tooltip>
+
+					<p:button id="buttonApi" value="API" image="ui-icon-calculator"
+						outcome="display.xhtml">
+						<f:param name="library" value="#{tagDisplayAction.libraryParam}"></f:param>
+						<f:param name="tag" value="#{tagDisplayAction.tagParam}"></f:param>
+						<f:param name="demo" value="api"></f:param>
+					</p:button>
+
+					<p:button id="buttonJs" value="JS" image="ui-icon-script"
+						outcome="display.xhtml">
+						<f:param name="library" value="#{tagDisplayAction.libraryParam}"></f:param>
+						<f:param name="tag" value="#{tagDisplayAction.tagParam}"></f:param>
+						<f:param name="demo" value="javascript"></f:param>
+					</p:button>
+					<p:tooltip for="buttonJs" value="JavaScript"></p:tooltip>
+
+					<p:commandButton id="buttonComment" image="ui-icon-comment"
+						rendered="#{tagDisplayAction.demoType eq 'CLASSIC'}"></p:commandButton>
+					<p:tooltip for="buttonComment" value="Comment"></p:tooltip>
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton id="commandButtonReport" image="ui-icon-alert"></p:commandButton>
+					<p:tooltip for="commandButtonReport" value="Report"></p:tooltip>
+
+					<p:commandButton id="commandButtonHelp" image="ui-icon-help"></p:commandButton>
+					<p:tooltip for="commandButtonHelp" value="Help"></p:tooltip>
+
+					<p:commandButton id="commandButtonEditDemo" image="ui-icon-pencil"
+						rendered="#{identity.hasPermission('edit','tagDemo')}"></p:commandButton>
+					<p:tooltip for="commandButtonEditDemo" value="Edit demo"></p:tooltip>
+
+					<p:commandButton id="commandButtonAddDemo"
+						image="ui-icon-plusthick"
+						rendered="#{identity.hasPermission('add','tagDemo')}"></p:commandButton>
+					<p:tooltip for="commandButtonAddDemo" value="Add demo"></p:tooltip>
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+
+		<p:spacer height="15" />
+
+		<!-- DEMO -->
+		<p:panel header="#{tagDisplayAction.demo.name}"
+			rendered="#{tagDisplayAction.demoType eq 'CLASSIC'}">
+			<h:form>
+				<p>
+					<h:outputText value="#{tagDisplayAction.demo.descriptionBefore}" />
+				</p>
+				<p>
+					<h:outputText value="#{tagDisplayAction.demo.fileName}" />
+				</p>
+				<p>
+					<h:outputText value="#{tagDisplayAction.demo.descriptionAfter}" />
+				</p>
+			</h:form>
+		</p:panel>
+
+		<!-- DOCUMENTATION -->
+		<p:panel header="Documentation"
+			rendered="#{tagDisplayAction.demoType eq 'DOCUMENTATION'}">
+			<h:form>
+				<h:outputText value="#{tagDisplayAction.tag.documentation}" />
+			</h:form>
+		</p:panel>
+
+		<!-- API -->
+		<p:panel header="API" rendered="#{tagDisplayAction.demoType eq 'API'}">
+			<h:form>
+				<p:dataTable value="#{tagDisplayAction.attributes}" var="_attribute">
+					<p:column headerText="Name">
+						<h:outputText value="#{_attribute.name}" />
+					</p:column>
+					<p:column headerText="Required">
+						<j:iconBoolean value="#{_attribute.required}"></j:iconBoolean>
+					</p:column>
+					<p:column headerText="Type">
+						<h:outputText value="#{_attribute.type}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_attribute.description}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+		<!-- JavaScript -->
+		<p:panel header="JavaScript"
+			rendered="#{tagDisplayAction.demoType eq 'JAVASCRIPT'}">
+			<h:form>
+				<p:dataTable value="#{tagDisplayAction.jsMethods}" var="_method">
+					<p:column headerText="Name">
+						<h:outputText value="#{_method.name}" />
+					</p:column>
+					<p:column headerText="Return">
+						<h:outputText value="#{_method.returnValue}" />
+					</p:column>
+					<p:column headerText="Description">
+						<h:outputText value="#{_method.description}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

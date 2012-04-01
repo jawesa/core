@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:toolbar id="toolbarTopMenu">
+			<p:toolbarGroup align="left">
+				<p:commandButton icon="ui-icon-home" title="Home" action="/index"
+					ajax="false"></p:commandButton>
+				<p:commandButton value="Tags" action="/public/tag/home" ajax="false"></p:commandButton>
+
+				<p:separator></p:separator>
+
+				<p:commandButton value="Tags" action="/admin/tag/tag/list"
+					ajax="false" />
+				<p:commandButton value="TagAttributes"
+					action="/admin/tag/tagattribute/list" ajax="false" />
+				<p:commandButton value="Permissions"
+					action="/admin/user/permission/list" ajax="false" />
+
+				<p:separator></p:separator>
+
+				<h:outputText value="#{conversationAction.debugDisplay}" />
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right" rendered="#{!identity.loggedIn}">
+				<p:commandButton value="Register" action="/register.xhtml"
+					ajax="false" />
+				<p:commandButton value="Login" icon="ui-icon-locked" action="/login"
+					ajax="false" />
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right" rendered="#{identity.loggedIn}">
+				<p:menuButton value="Options">
+					<p:menuitem value="Profil" icon="ui-icon ui-icon-person"
+						url="/private/profile/homeprofile.xhtml" ajax="false" />
+					<p:menuitem value="Logout" icon="ui-icon ui-icon-unlocked"
+						action="#{loginAction.logout()}" ajax="false"></p:menuitem>
+				</p:menuButton>
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+				<p:menuButton value="Locale : #{selectedLocale}"
+					model="#{localeSelector.menuModel}"></p:menuButton>
+
+				<p:menuButton value="Theme : #{theme['name']}"
+					model="#{themeSelector.menuModel}"></p:menuButton>
+
+				<p:menuButton value="Debug">
+					<p:menuitem value="Enable debug" icon="ui-icon ui-icon-check"
+						action="#{identity.enableDebug()}" ajax="false"
+						rendered="#{!identity.debug}"></p:menuitem>
+					<p:menuitem value="Disable debug" icon="ui-icon ui-icon-close"
+						action="#{identity.disableDebug()}" ajax="false"
+						rendered="#{identity.debug}"></p:menuitem>
+					<p:menuitem value="Show theme" icon="ui-icon ui-icon-newwin"
+						onclick="dialogDebugTheme.show()"></p:menuitem>
+					<p:menuitem value="Cache stats" icon="ui-icon ui-icon-newwin"
+						url="/cache.xhtml"></p:menuitem>
+				</p:menuButton>
+			</p:toolbarGroup>
+		</p:toolbar>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sc="http://java.sun.com/jsf/composite/components/seamfaces"
+	xmlns:j="http://java.sun.com/jsf/composite/jui"
+	template="/WEB-INF/layout/template/section/home.xhtml">
+	<ui:define name="content">
+		<p:panel header="Register">
+			<h:form>
+				<j:edit label="Login">
+					<p:inputText value="#{userAction.newUser.login}" id="username" required="true"
+						label="username" />
+				</j:edit>
+
+				<j:edit label="Password">
+					<p:password value="#{userAction.newUser.password}" id="password"
+						required="true" label="password" />
+				</j:edit>
+
+				<j:edit label="E-mail">
+					<p:inputText value="#{userAction.newUser.email}" id="email" required="true"
+						label="email" feedback="false" />
+				</j:edit>
+
+				<j:edit label="Captcha">
+					<p:captcha id="captcha" language="#{userLocale.language}"
+						required="true" label="captcha"
+						theme="#{theme.primefaces_captcha_theme}" />
+				</j:edit>
+
+				<p:commandButton value="Register" action="#{userAction.register()}"
+					ajax="false" />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

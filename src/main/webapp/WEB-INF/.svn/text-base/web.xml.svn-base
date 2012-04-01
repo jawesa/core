@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="3.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>Jawesa</display-name>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>/index.html</welcome-file>
+	</welcome-file-list>
+
+	<filter>
+		<filter-name>Pretty Filter</filter-name>
+		<filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Pretty Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>#{theme['primefaces_theme']}</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.richfaces.skin</param-name>
+		<param-value>#{theme['richfaces_skin']}</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.richfaces.enableControlSkinning</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!-- Keys used for Captcha -->
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LfwZwoAAAAAAEhRyntKF1PBzysAJLzqp2v-GMRR</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LfwZwoAAAAAAI-oUHpdvRnkMfu9fXQHxc0P7IBu</param-value>
+	</context-param>
+
+	<!-- Correcting following message : Infos [javax.enterprise.resource.webcontainer.jsf.facelets.tag.component] 
+		(http 127.0.0.1-8080-1) Skipping call to libraryExists(). Please set context-param 
+		com.sun.faces.enableMissingResourceLibraryDetection to true to verify if 
+		library http://java.sun.com/jsf/composite/components/seamfaces actually exists 
+		Infos [javax.enterprise.resource.webcontainer.jsf.facelets.tag.component] 
+		(http 127.0.0.1-8080-1) Skipping call to libraryExists(). Please set context-param 
+		com.sun.faces.enableMissingResourceLibraryDetection to true to verify if 
+		library http://java.sun.com/jsf/composite/jui actually exists -->
+	<context-param>
+		<param-name>com.sun.faces.enableMissingResourceLibraryDetection</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- <context-param> <param-name>javax.faces.PROJECT_STAGE</param-name> 
+		<param-value>Development</param-value> </context-param> -->
+
+	<context-param>
+		<param-name>javax.faces.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+
+
+
+</web-app>

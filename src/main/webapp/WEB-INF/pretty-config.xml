@@ -1,0 +1,26 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.2
+                                   		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.2.xsd">
+
+	<url-mapping id="tag">
+		<pattern value="/tag/" />
+		<view-id value="/public/tag/home.xhtml" />
+	</url-mapping>
+	
+	<url-mapping parentId="tag" id="library">
+		<pattern value="#{library : tagDisplayAction.libraryParam}/" />
+		<view-id value="/public/tag/home.xhtml" />
+	</url-mapping>
+	
+	<url-mapping parentId="library" id="tagdisplay">
+		<pattern value="#{tag : tagDisplayAction.tagParam}/" />
+		<view-id value="/public/tag/display.xhtml" />
+	</url-mapping>
+	
+	<url-mapping parentId="tagdisplay" id="tagdisplaydemo">
+		<pattern value="#{demo : tagDisplayAction.demoParam}/" />
+		<view-id value="/public/tag/display.xhtml" />
+	</url-mapping>
+
+</pretty-config>
